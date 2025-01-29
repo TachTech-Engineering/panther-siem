@@ -1,7 +1,7 @@
 AnalysisType: rule
-Filename: okta_new_behavior_accessing_admin_console.py
-RuleID: "Okta.New.Behavior.Accessing.Admin.Console"
-DisplayName: "Okta New Behaviors Acessing Admin Console"
+Filename: okta_new_behavior_device.py
+RuleID: "Okta.New.Behavior.Device"
+DisplayName: "Okta New Behaviors Device"
 Enabled: true
 LogTypes:
   - Okta.SystemLog
@@ -10,17 +10,17 @@ Reports:
     - TA0001:T1078.004 # Valid Accounts: Cloud Accounts
 Severity: High
 Description: >
-  New Behaviors Observed while Accessing Okta Admin Console.
-  A user attempted to access the Okta Admin Console from a new device with a new IP.
+  New Behaviors Observed with New Device.
+  A user attempted to authenticate with a New Device.
 Runbook: >
-  Configure Authentication Policies (Application Sign-on Policies) for access to privileged applications, including the Admin Console, to require re-authentication “at every sign-in”.
+  Configure Authentication Policies (Application Sign-on Policies) for access to privileged applications, to require re-authentication “at every sign-in”.
   Turn on and test New Device and Suspicious Activity end-user notifications.
 Reference: >
   https://sec.okta.com/articles/2023/08/cross-tenant-impersonation-prevention-and-detection
 DedupPeriodMinutes: 60
 Threshold: 1
 Tests:
-  - Name: New Behavior Accessing Admin Console (behavior)
+  - Name: New Behavior Device (behavior)
     ExpectedResult: true
     Log:
       { actor:
