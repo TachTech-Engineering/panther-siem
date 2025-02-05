@@ -24,4 +24,4 @@ panther-detection-helpers = "==0.4.0"
 pycountry = "==24.6.1"
 
 [requires]
-python_version = "3.11"
+python_version = "3.12"
