@@ -17,11 +17,12 @@ moto = ">=4.1"
 wrapt = "~=1.15"
 
 [packages]
-policyuniverse = "==1.5.1.20230817"
+policyuniverse = ">=1.5.1.20230817"
 requests = "==2.31.0"
 panther-analysis-tool = "~=0.55.1"
 panther-detection-helpers = "==0.4.0"
 pycountry = "==24.6.1"
+pypanther = ">=0.1.1a54"
 
 [requires]
-python_version = "3.12"
+python_version = "3.11"
