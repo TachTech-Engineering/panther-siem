@@ -10,11 +10,13 @@ PackDefinition:
     - AWS.CloudTrail.ResourceMadePublic
     - AWS.CloudTrail.S3Bucket.Public
     - AWS.CloudTrail.SnapshotMadePublic
+    - AWS.EC2.DiscoveryCommandsExecuted
     - AWS.EC2.Instance.DetailedMonitoring
     - AWS.EC2.Traffic.Mirroring
     - AWS.IAM.AccessKeyCompromised
     - AWS.KMS.CustomerManagedKeyLoss
     - AWS.KMS.RestrictsUsage
+    - AWS.Lambda.PublicAccess
     - AWS.Macie.Evasion
     - AWS.RDS.Instance.PublicAccess
     - AWS.RDS.Instance.SnapshotPublicAccess
@@ -62,6 +64,7 @@ PackDefinition:
     - AWS.CloudTrail.Password.Policy.Discovery
     - AWS.Console.LoginWithoutMFA
     - AWS.EC2.SecurityGroupModified
+    - AWS.IAM.BackdoorRole
     - AWS.IAM.Backdoor.User.Keys
     - AWS.IAM.CredentialsUpdated
     - AWS.IAM.Entity.InlinePolicyDoesNotGrantNetworkAdminAccess
@@ -76,7 +79,6 @@ PackDefinition:
     - AWS.PasswordPolicy.PasswordReuse
     - AWS.Potentially.Stolen.Service.Role.Scheduled
     - AWS.Suspicious.SAML.Activity
-    - AWS.User.Login.Profile.Modified
     # General Policies and Rules
     - Amazon.EKS.Audit.Multiple403
     - Amazon.EKS.Audit.SystemNamespaceFromPublicIP
@@ -90,8 +92,12 @@ PackDefinition:
     - AWS.CloudFormation.Stack.UsesIAMServiceRole
     - AWS.CloudTrail.CodebuildProjectMadePublic
     - AWS.CloudTrail.Created
+    - AWS.CloudTrail.DNSLogsDeleted
     - AWS.CloudTrail.Enabled
+    - AWS.CloudTrail.EnableRegion
+    - AWS.CloudTrail.EventSelectorsDisabled
     - AWS.CloudTrail.SecurityConfigurationChange
+    - AWS.CloudTrail.ShortLifecycle
     - AWS.CloudTrail.Stopped
     - AWS.CloudTrail.UnauthorizedAPICall
     - AWS.CloudWatchLogs.DataRetention1Year
@@ -104,11 +110,13 @@ PackDefinition:
     - AWS.ConfigService.DisabledDeleted
     - AWS.DynamoDB.Autoscaling
     - AWS.EC2.Instance.EBSOptimization
+    - AWS.EC2.ManyPasswordReadAttempts
     - AWS.EC2.Startup.Script.Change
     - AWS.EC2.StopInstances
     - AWS.EC2.StopInstance.FOLLOWED.BY.ModifyInstanceAttributes
     - AWS.ELBV2.LoadBalancer.HasSSLPolicy
     - AWS.ELBv2.SSLPolicy
+    - AWS.GuardDuty.CriticalSeverityFinding
     - AWS.GuardDuty.Enabled
     - AWS.GuardDuty.HighSeverityFinding
     - AWS.GuardDuty.LowSeverityFinding
@@ -128,21 +136,42 @@ PackDefinition:
     - AWS.S3.Bucket.NameDNSCompliance
     - AWS.S3.BucketDeleted
     - AWS.S3.BucketPolicyModified
+    - AWS.S3.CopyObjectWithClientSideEncryption
+    - AWS.S3.DeleteObject
+    - AWS.S3.DeleteObjects
     - AWS.S3.ServerAccess.Error
     - AWS.SecurityHub.Finding.Evasion
     - AWS.VPC.FlowLogs
+    - AWS.VPCFlow.LogsDeleted
     - AWS.WAF.Disassociation
     - AWS.WAF.HasXSSPredicate
     - AWS.WAF.LoggingConfigured
     - AWS.WAF.WebACLHasAssociatedResources
+    # Lambda rules
+    - AWS.Lambda.UpdateFunctionConfiguration
+    - AWS.Potential.Backdoor.Lambda
+    - AWS.Lambda.UpdateFunctionCode
+    # Bedrock rules
+    - AWS.Bedrock.DeleteModelInvocationLoggingConfiguration
+    - AWS.Bedrock.GuardrailUpdateDelete
     # Other rules
+    - Amazon.EKS.AnonymousAPIAccess
     - AWS.CloudTrail.Account.Discovery
+    - AWS.CloudTrail.AttemptToLeaveOrg
     - AWS.CloudTrail.CloudWatchLogs
     - AWS.CloudTrail.LogEncryption
     - AWS.CloudTrail.LogValidation
     - AWS.CloudTrail.S3Bucket.AccessLogging
+    - AWS.CloudTrail.SES.CheckIdentityVerifications
+    - AWS.CloudTrail.VPCE.AccessDenied
+    - AWS.CloudTrail.VPCE.ExternalPrincipal
+    - AWS.CloudTrail.VPCE.S3ExternalIP
+    - AWS.CloudTrail.VPCE.SensitiveAPICalls
     - AWS.CMK.KeyRotation
     - AWS.DynamoDB.TableTTLEnabled
+    - AWS.EC2.DownloadInstanceUserData
+    - AWS.EC2.LaunchUnusualEC2Instances
+    - AWS.EC2.MultiInstanceConnect
     - AWS.EC2.Vulnerable.XZ.Image.Launched
     - AWS.IAM.Policy.DoesNotGrantAdminAccess
     - AWS.IAM.Policy.DoesNotGrantNetworkAdminAccess
@@ -167,7 +196,10 @@ PackDefinition:
     - VPC.DNS.Tunneling
     - VPCFlow.Port.Scanning
     # Correlation Rules
+    - AWS.Administrative.IAM.User.Created
+    - AWS.Backdoor.Administrative.IAM.Role.Created
     - AWS.Privilege.Escalation.Via.User.Compromise
+    - AWS.CloudTrail.SES.SESEnumeration
     - AWS.SSO.Access.Token.Retrieved.by.Unauthenticated.IP
     - AWS.User.Takeover.Via.Password.Reset
     # Signal Rules
@@ -176,9 +208,26 @@ PackDefinition:
     - AWS.CloudTrail.UserAccessKeyAuth
     - AWS.CloudTrail.LoginProfileCreatedOrModified
     - AWS.Console.Login
+    - AWS.IAM.AttachAdminRolePolicy
+    - AWS.IAM.AttachAdminUserPolicy
+    - AWS.IAM.CreateRole
+    - AWS.IAM.CreateUser
+    - AWS.CloudTrail.SES.CheckSESSendingEnabled
+    - AWS.CloudTrail.SES.CheckSendQuota
+    - AWS.CloudTrail.SES.ListIdentities
     - Retrieve.SSO.access.token
     - Sign-in.with.AWS.CLI.prompt
+    # Stratus Red Team Rules
+    - AWS SSM Multiple Sessions
+    - AWS.SecretsManager.RetrieveSecretsMultiRegion
+    - AWS.SecretsManager.RetrieveSecrets
+    - AWS.SecretsManager.BatchRetrieveSecrets
+    - AWS.SecretsManager.BatchRetrieveSecretsCatchAll
+    - AWS.SSM.DecryptSSMParams
+    - AWS.SSM.DistributedCommand
+    - AWS.SSM.MultipleSessions
     # Queries
+    - AWS EC2 Discovery Commands Executed
     - AWS Potentially Stolen Service Role
     - Query.CloudTrail.Password.Spraying
     - Query.VPC.DNS.Tunneling

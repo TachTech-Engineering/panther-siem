@@ -1,8 +1,8 @@
 on:
   workflow_dispatch:
   pull_request:
-      branches:
-        - develop
+    branches:
+      - develop
 
 permissions:
   contents: read
@@ -14,21 +14,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
-        with:
-          disable-sudo: true
-          egress-policy: block
-          allowed-endpoints: >
-            api.github.com:443
-            files.pythonhosted.org:443
-            github.com:443
-            pypi.org:443
-
       - name: Checkout panther-analysis
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #v4.2.2
 
       - name: Set python version
-        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b #v5.3.0
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 #v5.4.0
         with:
           python-version: "3.11"
 
@@ -40,7 +30,9 @@ jobs:
         run: |
           # Get the output for the PR comment body
           panther_analysis_tool check-packs 2> errors.txt || true
-          echo ::set-output name=errors::`cat errors.txt`
+          echo 'errors<<EOF' >> $GITHUB_OUTPUT # Use a delimiter
+          cat errors.txt >> $GITHUB_OUTPUT      # Append the content
+          echo 'EOF' >> $GITHUB_OUTPUT          # Close the delimiter
 
       - name: Check packs (Exit Code)
         run: |
@@ -65,3 +57,4 @@ jobs:
         with:
           mode: delete
           comment-tag: check-packs
+
